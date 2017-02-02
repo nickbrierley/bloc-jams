@@ -30,6 +30,30 @@
      ]
  };
 
+ var albumTaxpayers = {
+     title: 'God, Forgive These Bastards',
+     artist: 'The Taxpayers',
+     label: 'Punk',
+     year: '2012',
+     albumArtUrl: 'assets/images/album_covers/godforgive.jpg',
+     songs: [
+         { title: 'As the Sun Beat Down', duration: '2:59' },
+         { title: "Atlanta's own", duration: '3:36' },
+         { title: 'Who the Hell are You', duration: '1:43'},
+         { title: 'Goddamn These Hands of Mine', duration: '2:15' },
+         { title: 'Drinking With Mickey Mantle', duration: '2:49' },
+         { title: 'Raised in the Shadows', duration: '1:31' },
+         { title: 'Weapon of God', duration: '2:19'},
+         { title: 'Jimmy Barletts Teeth', duration: '1:52' },
+         { title: 'Hungry Dog in the Street', duration: '1:41' },
+         { title: 'The Buisness Man', duration: '2:57' },
+         { title: 'The Carriage Town Clinic', duration: '2:55'},
+         { title: 'I Love You Like an Alcoholic', duration: '3:36' },
+         { title: 'Some Rotten Man', duration: '4:05'},
+         { title: 'Let the Seconds Do their Worst', duration: '3:02'}
+     ]
+ };
+
 var createSongRow = function(songNumber, songName, songLength) {
      var template =
         '<tr class="album-view-song-item">'
@@ -41,15 +65,15 @@ var createSongRow = function(songNumber, songName, songLength) {
  
      return template;
  };
+     // #1
+var albumTitle = document.getElementsByClassName('album-view-title')[0];
+var albumArtist = document.getElementsByClassName('album-view-artist')[0];
+var albumReleaseInfo = document.getElementsByClassName('album-view-release-info')[0];
+var albumImage = document.getElementsByClassName('album-cover-art')[0];
+var albumSongList = document.getElementsByClassName('album-view-song-list')[0];
+ 
 
 var setCurrentAlbum = function(album) {
-     // #1
-     var albumTitle = document.getElementsByClassName('album-view-title')[0];
-     var albumArtist = document.getElementsByClassName('album-view-artist')[0];
-     var albumReleaseInfo = document.getElementsByClassName('album-view-release-info')[0];
-     var albumImage = document.getElementsByClassName('album-cover-art')[0];
-     var albumSongList = document.getElementsByClassName('album-view-song-list')[0];
- 
      // #2
      albumTitle.firstChild.nodeValue = album.title;
      albumArtist.firstChild.nodeValue = album.artist;
@@ -65,6 +89,16 @@ var setCurrentAlbum = function(album) {
      }
  };
  
- window.onload = function() {
-     setCurrentAlbum(albumMarconi);
- };
+window.onload = function() {
+    setCurrentAlbum(albumPicasso);
+    
+    var albums = [albumPicasso, albumMarconi, albumTaxpayers];
+    var index = 1;
+    albumImage.addEventListener("click", function(event) {
+        setCurrentAlbum(albums[index]);
+        index++;
+        if (index == albums.length) {
+            index = 0;
+        }
+    });
+};
