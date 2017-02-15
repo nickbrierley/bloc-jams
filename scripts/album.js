@@ -131,7 +131,7 @@ var nextSong = function() {
     var currentSongIndex = trackIndex(currentAlbum, currentSongFromAlbum);
     currentSongIndex++;
     
-    if (currentSongIndex >= currentAlbum.length) {
+    if (currentSongIndex >= currentAlbum.song.length) {
         currentSongIndex = 0;
     }
     
