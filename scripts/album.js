@@ -98,6 +98,24 @@ var clickHandler = function() {
     }
 };
 
+var togglePlayFromPlayerBar = function() {
+    var currentlyPlayingCell = getSongNumberCell(currentlyPlayingSongNumber);
+    
+    if(!currentSoundFile){
+        return;
+    } 
+    
+    if(currentSoundFile.isPaused()) {
+        $(currentlyPlayingCell).html(pauseButtonTemplate);
+        $playPause.html(playerBarPauseButton);
+        currentSoundFile.play();
+    } else { 
+        $(currentlyPlayingCell).html(playButtonTemplate);
+        $playPause.html(playerBarPlayButton);
+        currentSoundFile.pause(); 
+    }
+};
+
 var setCurrentAlbum = function(album) {
     currentAlbum = album;
     var $albumTitle = $('.album-view-title');
@@ -151,11 +169,12 @@ var setupSeekBars = function() {
         var barWidth = $(this).width();
         var seekBarFillRatio = offsetX / barWidth;
         
-        if ($(this).parent().attr('class') === 'seek-control') {
+        if ($(this).parent().attr('class') === 'seek-control' && currentSoundFile !== null) {
             seek(seekBarFillRatio * currentSoundFile.getDuration());
         } else {
             setVolume(seekBarFillRatio * 100);
-        }
+        } 
+    
         updateSeekPercentage($(this), seekBarFillRatio);
     });
     
@@ -167,7 +186,7 @@ var setupSeekBars = function() {
             var barWidth = $seekBar.width();
             var seekBarFillRatio = offsetX / barWidth;
             
-            if ($seekBar.parent().attr('class') === 'seek-control') {
+            if ($seekBar.parent().attr('class') === 'seek-control' && currentSoundFile !== null) {
                 seek(seekBarFillRatio * currentSoundFile.getDuration());
             } else {
                 setVolume(seekBarFillRatio);
@@ -278,10 +297,11 @@ var currentSoundFile = null;
 var currentVolume = 80;
 var $previousButton = $('.main-controls .previous');
 var $nextButton = $('.main-controls .next');
-
+var $playPause = $('.main-controls .play-pause')
 $(document).ready(function() {
     setCurrentAlbum(albumPat);
     setupSeekBars();
     $previousButton.click(previousSong);
     $nextButton.click(nextSong);
+    $playPause.click(togglePlayFromPlayerBar)
  });
