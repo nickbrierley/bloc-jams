@@ -87,7 +87,9 @@ var clickHandler = function() {
 var togglePlayFromPlayerBar = function() {
     var currentlyPlayingCell = getSongNumberCell(currentlyPlayingSongNumber);
     
-    if(currentSoundFile.isPaused()) {
+    if(currentSoundFile === null){
+        return;
+    } else if(currentSoundFile.isPaused()) {
         $(currentlyPlayingCell).html(pauseButtonTemplate);
         $playPause.html(playerBarPauseButton);
         currentSoundFile.play();
